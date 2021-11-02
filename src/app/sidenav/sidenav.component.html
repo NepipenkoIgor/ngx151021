@@ -1,0 +1,18 @@
+<mat-sidenav-container>
+  <mat-sidenav #drawer mode="over">
+    <mat-list class="menu">
+      <mat-list-item>
+        <mat-icon matListIcon>dashboard</mat-icon>
+        Dashboard
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>logout</mat-icon>
+        Log out
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div  #content></div>
+<!--    <ng-content></ng-content>-->
+  </mat-sidenav-content>
+</mat-sidenav-container>

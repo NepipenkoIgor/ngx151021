@@ -1,18 +1,9 @@
-<ngx-classwork-header [pageTitle]="title"
-                      (toggle)="getValue('', $event)"
+<ngx-classwork-header [pageTitle]="pageTitle"
+                      [drawer]=drawer
 ></ngx-classwork-header>
-
-
-<!--<div>-->
-<!--  {{title + ' ' + getSalary() + '$'}}-->
-<!--</div>-->
-<!--<span>{{user.info?.male}}-->
-<!--</span>-->
-
-<!--<img [src]="imgSrc" [alt]="title" [style.width.%]="imgWidth">-->
-
-<!--<div [innerHTML]="textSpan" (click)="getValue(title, $event)"></div>-->
-
-<!--<input type="text" [value]="title"-->
-<!--       (input)="title = $any($event.target).value">-->
+<ngx-classwork-sidenav (setSideNav)="onSetSideNav($event)">
+ <ng-template #contentForProjection>
+   <ngx-classwork-search [searchTerm]="pageTitle.title" (searchTermChange)="search($event)"></ngx-classwork-search>
+ </ng-template>
+</ngx-classwork-sidenav>
 
