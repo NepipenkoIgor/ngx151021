@@ -4,16 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchComponent } from './search/search.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductsFilterPipe } from './products-filter.pipe';
+import { SharedModule } from './shared/shared.module';
 
 /*
  NgModule => es6 module
@@ -24,20 +19,15 @@ import { MatListModule } from '@angular/material/list';
 
 // NgModule, Directive, Pipe, Service
 @NgModule({
-	declarations: [AppComponent, HeaderComponent, SearchComponent, SidenavComponent],
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		MatToolbarModule,
-		MatIconModule,
-		MatButtonModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSidenavModule,
-		MatListModule,
-		FlexLayoutModule,
+	declarations: [
+		AppComponent,
+		HeaderComponent,
+		SearchComponent,
+		SidenavComponent,
+		ProductCardComponent,
+		ProductsFilterPipe,
 	],
-	exports: [],
+	imports: [BrowserModule, BrowserAnimationsModule, SharedModule],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
