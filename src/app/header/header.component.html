@@ -5,9 +5,11 @@
     </button>
     <h3>{{pageTitle.title}}</h3>
   </div>
-
-  <button mat-button>
-    <mat-icon>shopping_cart</mat-icon>
-  </button>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <ngx-classwork-exchange-rates></ngx-classwork-exchange-rates>
+    <button mat-button>
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 

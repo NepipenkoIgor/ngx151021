@@ -1,0 +1,35 @@
+<!--<input type="text" (input)="changeDelay($event)">-->
+
+<ng-container *ngIf="slider; else staticContent">
+  <div *ngxClassworkExchangeRates="let rate from rates autoplay mode delay ms; let ctrl = controls"
+       (mouseenter)="cPrev.show();cNext.show()"
+       (mouseleave)="cPrev.hide();cNext.hide()"
+  >
+    <button mat-button (click)="ctrl.prev()" ngxClassworkHidden #cPrev="hc">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <span>{{rate.value | currency: rate.currency : 'symbol-narrow'}}</span>
+    <button mat-button (click)="ctrl.next()" ngxClassworkHidden #cNext="hiddenControl">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
+
+</ng-container>
+
+<ng-template #staticContent>
+  <div>{{this.rates[0]?.value | currency: this.rates[0]?.currency : 'symbol-narrow'}}</div>
+</ng-template>
+
+
+<!--<ng-template ngxClassworkExchangeRates let-rate-->
+<!--             [ngxClassworkExchangeRatesFrom]="rates" let-ctrl="controls">-->
+<!--  <div>-->
+<!--    <button mat-button (click)="ctrl.prev()">-->
+<!--      <mat-icon>keyboard_arrow_left</mat-icon>-->
+<!--    </button>-->
+<!--    <span>{{rate.value | currency: rate.currency : 'symbol-narrow'}}</span>-->
+<!--    <button mat-button (click)="ctrl.next()">-->
+<!--      <mat-icon>keyboard_arrow_right</mat-icon>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--</ng-template>-->

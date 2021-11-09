@@ -11,7 +11,6 @@ export class ProductsFilterPipe implements PipeTransform {
 		searchText: string = '',
 		onlyFavorites = false,
 	): IProduct[] {
-		console.log('CALC');
 		let result: IProduct[] = products;
 		if (onlyFavorites) {
 			result = result.filter((p: IProduct) => p.isFavorite === onlyFavorites);

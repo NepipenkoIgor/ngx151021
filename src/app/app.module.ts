@@ -9,6 +9,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsFilterPipe } from './products-filter.pipe';
 import { SharedModule } from './shared/shared.module';
+import { ExchangeRatesComponent } from './header/exchange-rates/exchange-rates.component';
+import { ExchangeRatesDirective } from './header/exchange-rates/exchange-rates.directive';
+import { HiddenDirective } from './header/exchange-rates/hidden.directive';
 
 /*
  NgModule => es6 module
@@ -26,6 +29,9 @@ import { SharedModule } from './shared/shared.module';
 		SidenavComponent,
 		ProductCardComponent,
 		ProductsFilterPipe,
+		ExchangeRatesComponent,
+		ExchangeRatesDirective,
+		HiddenDirective,
 	],
 	imports: [BrowserModule, BrowserAnimationsModule, SharedModule],
 	bootstrap: [AppComponent],
