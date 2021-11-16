@@ -16,9 +16,7 @@ export interface IProduct {
 export class ProductsService {
 	public timestamp = Date.now();
 
-	public constructor(private readonly http: HttpClient) {
-		console.log(this.http);
-	}
+	public constructor(private readonly http: HttpClient) {}
 
 	public getProducts(): Observable<any> {
 		return this.http.get<{ data: IProduct[] }>(`/products`).pipe(

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -12,20 +12,31 @@ import { SharedModule } from './shared/shared.module';
 import { ExchangeRatesComponent } from './header/exchange-rates/exchange-rates.component';
 import { ExchangeRatesDirective } from './header/exchange-rates/exchange-rates.directive';
 import { HiddenDirective } from './header/exchange-rates/hidden.directive';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductsService } from './products.service';
 import { environment } from '../environments/environment';
 import { BASE_URL } from './tokens';
 import { AuthInterceptor } from './auth.interceptor';
+import { catchError, tap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { ModalModule } from './modal/modal.module';
 
-/*
- NgModule => es6 module
- imports => import
- exports => export
- declarations => let/const/function
- */
+function initApp(http: HttpClient) {
+	return () => {
+		// http.get('json')
+		//TODO why error
+		return http.get('assets/config/config.json').pipe(
+			tap((data) => {
+				console.log('Do something', data);
+			}),
+			catchError((err) => {
+				console.log(err);
+				return EMPTY;
+			}),
+		);
+	};
+}
 
-// NgModule, Directive, Pipe, Service
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -39,6 +50,12 @@ import { AuthInterceptor } from './auth.interceptor';
 		HiddenDirective,
 	],
 	providers: [
+		{
+			provide: APP_INITIALIZER,
+			useFactory: initApp,
+			multi: true,
+			deps: [HttpClient],
+		},
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,
@@ -60,7 +77,7 @@ import { AuthInterceptor } from './auth.interceptor';
 			//	multi: true,
 		},
 	],
-	imports: [BrowserModule, BrowserAnimationsModule, SharedModule, HttpClientModule],
+	imports: [BrowserModule, BrowserAnimationsModule, SharedModule, HttpClientModule, ModalModule],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

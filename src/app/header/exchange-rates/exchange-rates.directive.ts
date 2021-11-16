@@ -29,7 +29,6 @@ export class ExchangeRatesDirective implements OnInit {
 
 	@Input('ngxClassworkExchangeRatesDelay')
 	public set interval(ms: number) {
-		console.log(ms);
 		if (!ms) {
 			return;
 		}
@@ -52,7 +51,6 @@ export class ExchangeRatesDirective implements OnInit {
 	) {}
 
 	public ngOnInit() {
-		console.log(this.ms);
 		this.context = {
 			$implicit: this.rates[0],
 			controls: {
@@ -83,7 +81,6 @@ export class ExchangeRatesDirective implements OnInit {
 	}
 
 	private initInterval(): void {
-		console.log('Init', this.ms);
 		this.intervalId = setInterval(() => {
 			this.next();
 			this.cdr.detectChanges();
