@@ -1,7 +1,5 @@
 import {
 	Component,
-	ComponentFactory,
-	ComponentFactoryResolver,
 	ComponentRef,
 	HostListener,
 	OnInit,
@@ -21,12 +19,12 @@ export class ModalComponent implements OnInit {
 	@ViewChild('modalContent', { read: ViewContainerRef })
 	public modalContent!: ViewContainerRef;
 
-	private componentFactory!: ComponentFactory<any>;
+	// private componentFactory!: ComponentFactory<any>;
 
 	private componentRef!: ComponentRef<any>;
 
 	public constructor(
-		private readonly cfr: ComponentFactoryResolver,
+		// private readonly cfr: ComponentFactoryResolver,
 		private readonly modalService: ModalService,
 	) {}
 
@@ -37,8 +35,9 @@ export class ModalComponent implements OnInit {
 				return;
 			}
 			this.isOpen = true;
-			this.componentFactory = this.cfr.resolveComponentFactory(data.component);
-			this.componentRef = this.modalContent.createComponent(this.componentFactory);
+			// this.componentFactory = this.cfr.resolveComponentFactory(data.component);
+			// this.componentRef = this.modalContent.createComponent(this.componentFactory);
+			this.componentRef = this.modalContent.createComponent(data.component);
 			Object.keys(data.context).forEach((key: string) => {
 				this.componentRef.instance[key] = data.context[key];
 			});

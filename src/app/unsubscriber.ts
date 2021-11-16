@@ -14,7 +14,7 @@ export class UnSubscriber implements OnDestroy {
 	public unSubscriber$$ = new Subject();
 
 	public ngOnDestroy() {
-		this.unSubscriber$$.next();
+		this.unSubscriber$$.next(true);
 		this.unSubscriber$$.complete();
 	}
 }
