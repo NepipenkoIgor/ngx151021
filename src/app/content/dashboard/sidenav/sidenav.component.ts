@@ -9,7 +9,7 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ProductsService } from '../products.service';
+import { ProductsService } from '../content/products/products.service';
 
 @Component({
 	selector: 'ngx-classwork-sidenav',

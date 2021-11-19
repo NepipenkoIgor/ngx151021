@@ -1,9 +1,13 @@
 <mat-sidenav-container>
   <mat-sidenav #drawer mode="over">
     <mat-list class="menu">
-      <mat-list-item>
+      <mat-list-item [routerLink]="['/dashboard/products']">
         <mat-icon matListIcon>dashboard</mat-icon>
-        Dashboard
+        Products
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/dashboard/profile']">
+        <mat-icon matListIcon>dashboard</mat-icon>
+        Profile
       </mat-list-item>
       <mat-list-item>
         <mat-icon matListIcon>logout</mat-icon>
@@ -12,7 +16,7 @@
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div  #content></div>
-<!--    <ng-content></ng-content>-->
+    <div #content></div>
+    <!--    <ng-content></ng-content>-->
   </mat-sidenav-content>
 </mat-sidenav-container>

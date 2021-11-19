@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AltPrefixPipe } from './alt-prefix/alt-prefix.pipe';
+import { AuthGuard } from './auth/auth.guard';
 
 const declarationsInternal: any[] = [];
 const declarationsExternal = [AltPrefixPipe];
@@ -36,4 +37,11 @@ const modulesExternal: any = [
 	imports: [...modulesInternal],
 	exports: [...declarationsExternal, ...modulesExternal],
 })
-export class SharedModule {}
+export class SharedModule {
+	public static forRoot(): ModuleWithProviders<SharedModule> {
+		return {
+			ngModule: SharedModule,
+			providers: [AuthGuard],
+		};
+	}
+}

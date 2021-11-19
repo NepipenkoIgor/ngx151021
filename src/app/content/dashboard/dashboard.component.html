@@ -1,0 +1,9 @@
+<ngx-classwork-header [pageTitle]="pageTitle"
+                      [drawer]=drawer
+></ngx-classwork-header>
+<ngx-classwork-sidenav (setSideNav)="onSetSideNav($event)">
+  <ng-template #contentForProjection>
+     <router-outlet></router-outlet>
+  </ng-template>
+</ngx-classwork-sidenav>
+

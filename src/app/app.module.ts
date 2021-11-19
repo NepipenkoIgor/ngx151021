@@ -3,31 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
-import { SearchComponent } from './search/search.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { ProductCardComponent } from './product-card/product-card.component';
-import { ProductsFilterPipe } from './products-filter.pipe';
 import { SharedModule } from './shared/shared.module';
-import { ExchangeRatesComponent } from './header/exchange-rates/exchange-rates.component';
-import { ExchangeRatesDirective } from './header/exchange-rates/exchange-rates.directive';
-import { HiddenDirective } from './header/exchange-rates/hidden.directive';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { ProductsService } from './products.service';
 import { environment } from '../environments/environment';
 import { BASE_URL } from './tokens';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { catchError, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from './modal/modal.module';
+import { Router } from '@angular/router';
 
-function initApp(http: HttpClient) {
+function initApp(http: HttpClient, router: Router) {
+	console.log(router.config);
 	return () => {
-		// http.get('json')
-		//TODO why error
 		return http.get('assets/config/config.json').pipe(
 			tap((data) => {
 				console.log('Do something', data);
+				// router.resetConfig([
+				// 	...router.config,
+				// 	{
+				// 		path: '**',
+				// 		redirectTo: 'dashboard',
+				// 	},
+				// ]);
 			}),
 			catchError((err) => {
 				console.log(err);
@@ -38,33 +37,18 @@ function initApp(http: HttpClient) {
 }
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HeaderComponent,
-		SearchComponent,
-		SidenavComponent,
-		ProductCardComponent,
-		ProductsFilterPipe,
-		ExchangeRatesComponent,
-		ExchangeRatesDirective,
-		HiddenDirective,
-	],
+	declarations: [AppComponent],
 	providers: [
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
 			multi: true,
-			deps: [HttpClient],
+			deps: [HttpClient, Router],
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,
 			multi: true,
-		},
-		{
-			provide: ProductsService,
-			//useValue: 100,
-			useClass: ProductsService,
 		},
 		{
 			provide: BASE_URL,
@@ -77,11 +61,14 @@ function initApp(http: HttpClient) {
 			//	multi: true,
 		},
 	],
-	imports: [BrowserModule, BrowserAnimationsModule, SharedModule, HttpClientModule, ModalModule],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		SharedModule.forRoot(),
+		HttpClientModule,
+		ModalModule.Root(),
+		AppRoutingModule,
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-// let arr = [1, 2, 3, 4, 5];
-//Array(100).fill(1, 0, 100);
-//Array.from(Array(100).keys());
