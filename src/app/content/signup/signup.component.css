@@ -1,0 +1,13 @@
+.signup-container {
+  padding: 60px 1rem;
+}
+
+.signup-container mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.signup-container mat-card mat-form-field {
+  width: 100%;
+}

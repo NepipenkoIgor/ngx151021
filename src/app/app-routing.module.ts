@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/auth/auth.guard';
+import { PreloadStrategyService } from './preload-strategy.service';
 
 const routes: Routes = [
 	{
 		path: 'login',
 		loadChildren: () => import('./content/login/login.module').then((m) => m.LoginModule),
 		canActivate: [AuthGuard],
+		data: {
+			title: 'Login page',
+		},
 	},
 	{
 		path: 'signup',
@@ -26,7 +30,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadStrategyService })],
 	exports: [RouterModule],
+	providers: [PreloadStrategyService],
 })
 export class AppRoutingModule {}

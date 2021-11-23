@@ -11,11 +11,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AltPrefixPipe } from './alt-prefix/alt-prefix.pipe';
 import { AuthGuard } from './auth/auth.guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WithoutSpecialCharactersDirective } from './validators/without-special-characters.directive';
+import { ValidatorsService } from './validators/validators.service';
 
 const declarationsInternal: any[] = [];
-const declarationsExternal = [AltPrefixPipe];
+const declarationsExternal = [WithoutSpecialCharactersDirective];
 const modulesInternal: any = [];
 const modulesExternal: any = [
 	CommonModule,
@@ -30,6 +32,8 @@ const modulesExternal: any = [
 	MatCardModule,
 	MatCheckboxModule,
 	FlexLayoutModule,
+	FormsModule,
+	ReactiveFormsModule,
 ];
 
 @NgModule({
@@ -41,7 +45,7 @@ export class SharedModule {
 	public static forRoot(): ModuleWithProviders<SharedModule> {
 		return {
 			ngModule: SharedModule,
-			providers: [AuthGuard],
+			providers: [AuthGuard, ValidatorsService],
 		};
 	}
 }

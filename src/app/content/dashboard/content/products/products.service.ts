@@ -26,4 +26,13 @@ export class ProductsService {
 			}),
 		);
 	}
+
+	public getProduct(id: string): Observable<any> {
+		return this.http.get<{ data: IProduct[] }>(`/products/${id}`).pipe(
+			catchError((err) => {
+				console.log(err);
+				return of(null);
+			}),
+		);
+	}
 }
