@@ -8,6 +8,10 @@ import { SearchComponent } from './search/search.component';
 import { RouterModule } from '@angular/router';
 import { OneProductComponent } from './one-product/one-product.component';
 import { OneProductResolver } from './one-product/one-product.resolver';
+import { StoreModule } from '@ngrx/store';
+import { productsReducer } from './store/reducer/products.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from './store/effects/products.effects';
 
 @NgModule({
 	declarations: [
@@ -32,6 +36,8 @@ import { OneProductResolver } from './one-product/one-product.resolver';
 				},
 			},
 		]),
+		StoreModule.forFeature('products', productsReducer),
+		EffectsModule.forFeature([ProductsEffects]),
 	],
 	providers: [ProductsService, OneProductResolver],
 })

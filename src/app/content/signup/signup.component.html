@@ -8,6 +8,25 @@
         <mat-error
           *ngIf="$any(signUpForm.get('username')).errors?.['withOutSpecial'] as withOutSpecial">{{withOutSpecial}}</mat-error>
       </mat-form-field>
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <span>Male</span>
+        <ngx-classwork-switcher formControlName="male"></ngx-classwork-switcher>
+      </div>
+      <div fxLayout="column" formGroupName="emails">
+        <div fxLayout="row"
+             *ngFor="let c of getControls(signUpForm, 'emails'); index as i; first as f; count as length ">
+          <mat-form-field>
+            <input matInput type="email" [formControlName]="i"
+                   placeholder="Email">
+          </mat-form-field>
+          <div fxFlex="10" fxLayout="row">
+            <mat-icon *ngIf="f" (click)="addEmail()">add</mat-icon>
+            <mat-icon *ngIf="length>1" (click)="removeEmail(i)">delete</mat-icon>
+          </div>
+        </div>
+      </div>
+
+
       <div formGroupName="passwords">
         <mat-form-field>
           <input matInput type="password" formControlName="password"
@@ -18,10 +37,10 @@
                  placeholder="Confirm Password" required>
         </mat-form-field>
       </div>
-            <button mat-raised-button color="primary"
-                    (click)="signup()"
-                    [disabled]="signUpForm.invalid">Log In
-            </button>
+      <button mat-raised-button color="primary"
+              (click)="signup()"
+              [disabled]="signUpForm.invalid || signUpForm.pending">Log In
+      </button>
       <a mat-button [routerLink]="['/login']">Go To Log In</a>
     </div>
   </mat-card>

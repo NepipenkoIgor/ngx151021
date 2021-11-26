@@ -1,35 +1,34 @@
 import { Injectable } from '@angular/core';
-import {
-	ActivatedRouteSnapshot,
-	CanActivate,
-	Router,
-	RouterStateSnapshot,
-	UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
+import { IAppState } from '../../store';
+import { Store } from '@ngrx/store';
+import { filter, take } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-	public constructor(private readonly router: Router) {}
+	public constructor(private readonly router: Router, private readonly store: Store<IAppState>) {}
 
 	public canActivate(
 		_route: ActivatedRouteSnapshot,
 		_state: RouterStateSnapshot,
-	): Observable<boolean | UrlTree> {
+	): Observable<boolean> {
 		const { url } = _state;
-		return of(false).pipe(
-			switchMap((isLogIn) => {
-				if (!isLogIn && (url === '/login' || url === '/signup')) {
+		return this.store.select('auth').pipe(
+			filter(({ loading }) => !loading),
+			take(1),
+			switchMap(({ user }) => {
+				if (!user && (url === '/login' || url === '/signup')) {
 					return of(true);
 				}
-				if (isLogIn && (url === '/login' || url === '/signup')) {
+				if (user && (url === '/login' || url === '/signup')) {
 					this.router.navigate(['/dashboard']);
 					return of(false);
 				}
-				if (!isLogIn) {
+				if (!user) {
 					this.router.navigate(['/login']);
 				}
-				return of(isLogIn);
+				return of(true);
 			}),
 		);
 	}

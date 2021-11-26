@@ -15,6 +15,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WithoutSpecialCharactersDirective } from './validators/without-special-characters.directive';
 import { ValidatorsService } from './validators/validators.service';
+import { AuthService } from './auth/auth.service';
 
 const declarationsInternal: any[] = [];
 const declarationsExternal = [WithoutSpecialCharactersDirective];
@@ -45,7 +46,7 @@ export class SharedModule {
 	public static forRoot(): ModuleWithProviders<SharedModule> {
 		return {
 			ngModule: SharedModule,
-			providers: [AuthGuard, ValidatorsService],
+			providers: [AuthGuard, ValidatorsService, AuthService],
 		};
 	}
 }

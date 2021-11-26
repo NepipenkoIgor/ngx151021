@@ -13,6 +13,11 @@ import { EMPTY } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from './modal/modal.module';
 import { Router } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { effects } from './store/effects';
+import { reducers } from './store';
 
 function initApp(http: HttpClient, router: Router) {
 	console.log(router.config);
@@ -20,13 +25,6 @@ function initApp(http: HttpClient, router: Router) {
 		return http.get('assets/config/config.json').pipe(
 			tap((data) => {
 				console.log('Do something', data);
-				// router.resetConfig([
-				// 	...router.config,
-				// 	{
-				// 		path: '**',
-				// 		redirectTo: 'dashboard',
-				// 	},
-				// ]);
 			}),
 			catchError((err) => {
 				console.log(err);
@@ -53,12 +51,6 @@ function initApp(http: HttpClient, router: Router) {
 		{
 			provide: BASE_URL,
 			useValue: environment.baseUrl,
-			// multi: true,
-		},
-		{
-			provide: 'BASE_URL',
-			useValue: 'http://localhost:3000',
-			//	multi: true,
 		},
 	],
 	imports: [
@@ -68,6 +60,20 @@ function initApp(http: HttpClient, router: Router) {
 		HttpClientModule,
 		ModalModule.Root(),
 		AppRoutingModule,
+		StoreModule.forRoot(reducers),
+		EffectsModule.forRoot(effects),
+		environment.production
+			? []
+			: StoreDevtoolsModule.instrument({
+					maxAge: 25,
+					logOnly: false,
+					autoPause: true,
+					features: {
+						pause: false,
+						lock: true,
+						persist: true,
+					},
+			  }),
 	],
 	bootstrap: [AppComponent],
 })
