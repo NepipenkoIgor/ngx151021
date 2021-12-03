@@ -13,15 +13,19 @@ import { EMPTY } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from './modal/modal.module';
 import { Router } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { effects } from './store/effects';
-import { reducers } from './store';
+import { IAppState, metaReducers, reducers } from './store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/reducer/router.reducer';
+import { checkJWT } from './store/actions/auth.actions';
 
-function initApp(http: HttpClient, router: Router) {
+function initApp(http: HttpClient, router: Router, store: Store<IAppState>) {
 	console.log(router.config);
 	return () => {
+		store.dispatch(checkJWT());
 		return http.get('assets/config/config.json').pipe(
 			tap((data) => {
 				console.log('Do something', data);
@@ -41,7 +45,7 @@ function initApp(http: HttpClient, router: Router) {
 			provide: APP_INITIALIZER,
 			useFactory: initApp,
 			multi: true,
-			deps: [HttpClient, Router],
+			deps: [HttpClient, Router, Store],
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
@@ -60,8 +64,11 @@ function initApp(http: HttpClient, router: Router) {
 		HttpClientModule,
 		ModalModule.Root(),
 		AppRoutingModule,
-		StoreModule.forRoot(reducers),
+		StoreModule.forRoot(reducers, { metaReducers: metaReducers as any }),
 		EffectsModule.forRoot(effects),
+		StoreRouterConnectingModule.forRoot({
+			serializer: CustomSerializer,
+		}),
 		environment.production
 			? []
 			: StoreDevtoolsModule.instrument({

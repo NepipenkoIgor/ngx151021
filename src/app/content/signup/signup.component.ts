@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ValidatorsService } from '../../shared/validators/validators.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../store';
+import { signUpPending } from '../../store/actions/auth.actions';
 
 @Component({
 	selector: 'ngx-classwork-signup',
@@ -34,6 +37,7 @@ export class SignupComponent {
 		private readonly router: Router,
 		private readonly validatorsService: ValidatorsService,
 		private readonly fb: FormBuilder,
+		private readonly store: Store<IAppState>,
 	) {}
 
 	public getControls(control: AbstractControl, path: string | string[]): AbstractControl[] {
@@ -49,7 +53,11 @@ export class SignupComponent {
 	}
 
 	public signup() {
-		console.log(this.signUpForm.value);
+		const {
+			passwords: { password },
+			...user
+		} = this.signUpForm.value;
+		this.store.dispatch(signUpPending({ user: { ...user, password } }));
 	}
 
 	public goToSignUp() {

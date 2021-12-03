@@ -1,6 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { loginPending, setUser } from '../actions/auth.actions';
 
+export interface ISignUpUser {
+	username: string;
+	male: boolean;
+	emails: string[];
+	password: string;
+}
+
 export interface IAuth {
 	loading: boolean;
 	user: any;

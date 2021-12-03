@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { ISignUpUser } from '../reducer/auth.reducer';
 
 export const checkJWT = createAction('[Auth] check JWT');
 export const logOut = createAction('[Auth] log out');
@@ -11,12 +12,7 @@ export const loginPending = createAction(
 export const signUpPending = createAction(
 	'[Auth] sign up pending',
 	props<{
-		user: {
-			username: string;
-			male: boolean;
-			emails: string[];
-			passwords: { password: string; cpassword: string };
-		};
+		user: ISignUpUser;
 	}>(),
 );
 

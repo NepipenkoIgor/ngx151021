@@ -10,6 +10,9 @@ import {
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ProductsService } from '../content/products/products.service';
+import { logOut } from '../../../store/actions/auth.actions';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../../store';
 
 @Component({
 	selector: 'ngx-classwork-sidenav',
@@ -30,8 +33,14 @@ export class SidenavComponent implements OnInit {
 	@Output()
 	public setSideNav = new EventEmitter(true);
 
+	public constructor(private readonly store: Store<IAppState>) {}
+
 	public ngOnInit(): void {
 		this.content.createEmbeddedView(this.tpl);
 		this.setSideNav.emit(this.drawer);
+	}
+
+	public logOut() {
+		this.store.dispatch(logOut());
 	}
 }
